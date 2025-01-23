@@ -1,6 +1,8 @@
+using BlazorApp1.Service;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using StudentManagementMongoDB.Data;
+using StudentManagementMongoDB.IService;
 
 namespace StudentManagementMongoDB
 {
@@ -14,7 +16,7 @@ namespace StudentManagementMongoDB
             builder.Services.AddRazorPages();
             builder.Services.AddServerSideBlazor();
             builder.Services.AddSingleton<WeatherForecastService>();
-
+            builder.Services.AddScoped<IStudentService, StudentService>();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
