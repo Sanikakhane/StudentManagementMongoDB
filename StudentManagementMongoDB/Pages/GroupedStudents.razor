@@ -1,0 +1,54 @@
+﻿@page "/grouped-students"
+@using StudentManagementMongoDB.Data
+@inject StudentManagementMongoDB.IService.IStudentService StudentService
+
+<h3 class="text-center my-4">Grouped Students by Age</h3>
+
+@if (groupedStudents == null)
+{
+    <div class="text-center">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+}
+else if (!groupedStudents.Any())
+{
+    <div class="alert alert-warning text-center" role="alert">
+        No students found.
+    </div>
+}
+else
+{
+    <div class="container">
+        @foreach (var group in groupedStudents)
+        {
+            <div class="card mb-3">
+                <div class="card-header bg-primary text-white">
+                    <h4>Age: @group.Key</h4>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group">
+                        @foreach (var student in group.Value)
+                        {
+                            <li class="list-group-item">
+                                <strong>Name:</strong> @student.Name <br />
+                                <strong>Roll:</strong> @student.Roll
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        }
+    </div>
+}
+
+@code {
+    private Dictionary<int, List<Student>> groupedStudents;
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Call the service to get grouped students
+        groupedStudents = await Task.Run(() => StudentService.GetStudentsGroupedbyAge());
+    }
+}

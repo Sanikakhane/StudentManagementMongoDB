@@ -10,5 +10,6 @@ namespace StudentManagementMongoDB.Data
         public string Name { get; set; } = "";
         public string Roll { get; set; } = "";
         public int Age { get; set; } = 0;
+
     }
 }
